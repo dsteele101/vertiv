@@ -2,8 +2,8 @@
   <body>
     <div>
   <div class="chat-overlay-input-submit-header"><span></span></div>
-  <!--<button id="chatOverlayInputSubmit" type="button"></button>
-  <button id="chatOverlayInputSubmit2" type="button">Trigger process in Chat Overlay</button>-->
+  <button id="chatOverlayInputSubmit" type="button"></button>
+  <button id="chatOverlayInputSubmit2" type="button">Trigger process in Chat Overlay</button>
 </div>
 <div class="chat-overlay chat-overlay-closed">
   <div class="chat-overlay-wrapper">
@@ -36,7 +36,7 @@
   height: 500px;
   bottom: 24px;
   right: 24px;
-  z-index: 99999;
+  z-index: 100;
 }
 
 .chat-overlay-input-submit-header {
@@ -439,6 +439,6 @@ function receiveMessage(e, data) {
   }
 window.addEventListener('message', receiveMessage);
 </script>
-    <iframe src="https://www.vertiv.com/en-ca/products-catalog/critical-power/uninterruptible-power-supplies-ups/liebert-pst5-ups/" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"></iframe>
+    <iframe src="https://www.vertiv.com/en-ca/products-catalog/critical-power/uninterruptible-power-supplies-ups/liebert-pst5-ups/" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:99;"></iframe>
   </body>
 </html>
