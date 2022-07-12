@@ -1,5 +1,6 @@
 <html>
   <body>
+    <script src="script.js"></script>
         <div>
   <div class="chat-overlay-input-submit-header"><span></span></div>
   <button id="chatOverlayInputSubmit" type="button" hidden="hidden"></button>
@@ -415,7 +416,8 @@ function receiveMessage(e, data) {
       return;
  
     if (e.data.action === "nav_pst5") {
-        window.location.href = "https://dsteele101.github.io/vertiv/pst5.html";
+        //window.location.href = "https://dsteele101.github.io/vertiv/pst5.html";
+        loadiFrame('https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/liebert-pst5-ups/');
         console.log("nav_pst5")
     }
 
