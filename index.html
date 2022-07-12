@@ -185,7 +185,7 @@
     iframeElem.contentWindow.postMessage({
       'actionType': 'ameliaSay',
       'actionData': 'Hi there'
-    }, 'hhttps://us.demo.amelia.com/Amelia/ui/AmeliaCust/');
+    }, 'https://us.demo.amelia.com/Amelia/ui/vertiv/');
   });
    
    document.getElementById('chatOverlayInputSubmit2').addEventListener('click', function () {
@@ -199,7 +199,7 @@
           'shouldEcho': false
         }
       }
-    }, 'https://us.demo.amelia.com/Amelia/ui/AmeliaCust/');
+    }, 'https://us.demo.amelia.com/Amelia/ui/vertiv/');
   });
 
   function openChatOverlay (receiverElem, imgElemOpen, imgElemClose) {
@@ -394,7 +394,7 @@
    
 window.addEventListener("message", (event) => {
   console.log('im in beginning of event', event.origin);
-  if (event.origin !== "https://us.demo.amelia.com/Amelia/ui/AmeliaCust/")
+  if (event.origin !== "https://us.demo.amelia.com/Amelia/ui/vertiv/")
     return;
 
   console.log('event', event);
@@ -435,7 +435,7 @@ function receiveMessage(e, data) {
      */
      
     var receiverElem = document.getElementById('receiver').contentWindow;
-    receiverElem.postMessage(data, "https://us.demo.amelia.com/Amelia/ui/AmeliaCust/?domainCode=derricksteele");
+    receiverElem.postMessage(data, "https://us.demo.amelia.com/Amelia/ui/vertiv//?domainCode=derricksteele");
   }
 window.addEventListener('message', receiveMessage);
 </script>
