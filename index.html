@@ -1,342 +1,193 @@
 <html>
-  <body>
-    <script src="script.js"></script>
-        <div>
-  <div class="chat-overlay-input-submit-header"><span></span></div>
-  <button id="chatOverlayInputSubmit" type="button" hidden="hidden"></button>
-  <button id="chatOverlayInputSubmit2" type="button" hidden="hidden"></button>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="grabData()">
+<script src="script.js"></script>
+<div>
+    <div class="chat-overlay-input-submit-header"><span></span></div>
+    <button id="chatOverlayInputSubmit" type="button" hidden="hidden"></button>
+    <button id="chatOverlayInputSubmit2" type="button" hidden="hidden"></button>
 </div>
 <div class="chat-overlay chat-overlay-closed">
-  <div class="chat-overlay-wrapper">
-    <div class="chat-overlay-header-mobile close">
-      <img class="close" src="https://www.weebly.com/editor/uploads/1/4/2/1/142117829/custom_themes/354841297510721806/files/images/close.png" alt="toggle chat overlay" />
+    <div class="chat-overlay-wrapper">
+        <div class="chat-overlay-header-mobile close">
+            <img class="close"
+                 src="/img/close.png"
+                 alt="toggle chat overlay"/>
+        </div>
+        <iframe id="receiver" class="close" src=""
+                frameborder="0" width="100%" height="100%" allow="geolocation; microphone; camera">
+            <p>Your browser does not support iframes.</p>
+        </iframe>
+        <div class="chat-overlay-header">
+            <img class="chat-overlay-header-img close"
+                 src="/img/close.png"
+                 alt="toggle chat overlay"/>
+            <img class="chat-overlay-header-img open"
+                 src="/img/icon.png"
+                 alt="toggle chat overlay"/>
+        </div>
     </div>
-    
-<!--      <iframe id="receiver" class="close" src="https://ameliav4.dev.amelia.com/Amelia/ui/raul/?domainCode=anonymous&embed=native" frameborder="0" width="100%" height="100%" allow="geolocation; microphone; camera">
-      <p>Your browser does not support iframes.</p>
-    </iframe> -->
-    <iframe id="receiver" class="close" src="https://us.demo.amelia.com/Amelia/ui/vertiv/?domainCode=derricksteele" frameborder="0" width="100%" height="100%" allow="geolocation; microphone; camera">
-      <p>Your browser does not support iframes.</p>
-    </iframe>
-<!--     <iframe id="receiver" class="close" src="https://ipsoft-amelia-uiux-v3.ipsoft.com/Amelia/ui/raul/?embed=iframe" frameborder="0" width="100%" height="100%" allow="geolocation; microphone; camera">
-      <p>Your browser does not support iframes.</p>
-    </iframe> -->
-<!--     <iframe id="receiver" class="close" src="https://sharecare.amelia.com/Amelia/ui/AmeliaCust/8/?domainCode=covidscreener" frameborder="0" width="100%" height="100%" allow="geolocation; microphone; camera">
-      <p>Your browser does not support iframes.</p>
-    </iframe> -->
-    <div class="chat-overlay-header">
-      <img class="chat-overlay-header-img close" src="https://www.weebly.com/editor/uploads/1/4/2/1/142117829/custom_themes/354841297510721806/files/images/close.png" alt="toggle chat overlay" />
-      <img class="chat-overlay-header-img open" src="https://www.weebly.com/editor/uploads/1/4/2/1/142117829/custom_themes/354841297510721806/files/images/icon.png" alt="toggle chat overlay" />
-    </div>
-  </div>
 </div>
-<style>
-.chat-overlay {
-  position: fixed;
-  width: 376px;
-  height: 500px;
-  bottom: 24px;
-  right: 24px;
-  z-index: 100;
-}
+<script>
+    document.getElementById('chatOverlayInputSubmit').addEventListener('click', function () {
+        var iframeElem = document.getElementById('receiver');
+        iframeElem.contentWindow.postMessage({
+            'actionType': 'ameliaSay',
+            'actionData': 'Hi there'
+        }, 'https://us.demo.amelia.com/Amelia/ui/vertiv/');
+    });
 
-.chat-overlay-input-submit-header {
-  padding: 1rem;
-}
+    document.getElementById('chatOverlayInputSubmit2').addEventListener('click', function () {
+        var iframeElem = document.getElementById('receiver');
+        iframeElem.contentWindow.postMessage({
+            'actionType': 'ameliaBpn',
+            'actionName': 'multi-select',
+            'actionData': {
+                'message': 'Test',
+                'submission': {
+                    'shouldEcho': false
+                }
+            }
+        }, 'https://us.demo.amelia.com/Amelia/ui/vertiv/');
+    });
 
-#chatOverlayInputSubmit {
-  cursor: pointer;
-  color: #FFF;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  background-color: #000;
-}
- 
-.chat-overlay-open {
-    height: 712px;
-}
- 
-.chat-overlay-closed {
-    height: 78px;
- 
-}
- 
-.chat-overlay-wrapper {
-  width: 376px;
-  height: 648px;
-}
- 
-.chat-overlay-header-mobile {
-    display: none;
-}
- 
-.chat-overlay-header {
-  position: relative;
-  height: 56px;
-  width: 56px;
-  border: 1px solid black;
-  background: #000;
-  margin-left: auto;
-  border-radius: 50%;
-  box-shadow: 1rem 1rem 5rem rgba(0, 0, 0, 0.5);
-}
- 
-#receiver {
-  transition: opacity 1s ease-in-out;
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: 1rem 1rem 5rem rgba(0, 0, 0, 0.5);
-  border-radius: 0.5rem;
-}
- 
-#receiver.close {
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-}
- 
-#receiver.open {
-  height: 100%;
-  opacity: 1;
-  overflow: hidden;
-}
- 
-.chat-overlay-header-img {
-  position: absolute;
-  max-width: 14px;
-  max-height: 14px;
-  transition: opacity 1s ease-in-out;
-  opacity: 1;
-  right: 0px;
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
-  margin: auto;
-}
- 
-.chat-overlay-header-img.open {
-  opacity: 0;
-}
-   
-.absolute-cart-box {
-  display: none;
-}
- 
-@media only screen and (max-width: 768px) {
-  .chat-overlay {
-    width: 100%;
-    position: fixed;
-    height: 100%;
-  }
- 
-  .chat-overlay-header-mobile {
-    display: flex;
-    width: inherit;
-    height: 9%;
-    background: #4d5aff;
-  }
- 
-  .chat-overlay-header-mobile img {
-    height: 30%;
-    padding: 1rem;
-    margin-left: auto;
-  }
- 
-  .chat-overlay-header-mobile.close {
-    display: none;
-  }
- 
-  #receiver {
-    border-radius: 0;
-  }
- 
-  #receiver.close {
-    height: 0;
-    opacity: 0;
-    overflow: hidden;
-  }
- 
-  #receiver.open {
-    height: 91%;
-    opacity: 1;
-    overflow: hidden;
-  }
- 
-  .chat-overlay-open {
-    height: 100%;
-    bottom: 0px;
-    right: 0px;
+    function openChatOverlay(receiverElem, imgElemOpen, imgElemClose) {
+        document.getElementById('receiver').classList.add("open");
+        document.getElementById('receiver').classList.remove("close");
+        document.getElementsByClassName('chat-overlay')[0].classList.add("chat-overlay-open");
+        document.getElementsByClassName('chat-overlay')[0].classList.remove("chat-overlay-closed");
+        document.getElementsByClassName('chat-overlay-header-mobile')[0].classList.remove('close');
+        imgElemClose.style.opacity = 1;
+        imgElemOpen.style.opacity = 0;
+        localStorage.setItem('chatOverlayOpen', true);
     }
- 
-  .chat-overlay-closed {
-        height: 70px;
-    bottom: 24px;
-    right: 24px;
+
+    function closeChatOverlay(receiverElem, imgElemOpen, imgElemClose) {
+        document.getElementById('receiver').classList.add("close");
+        document.getElementById('receiver').classList.remove("open");
+        document.getElementsByClassName('chat-overlay')[0].classList.add("chat-overlay-closed");
+        document.getElementsByClassName('chat-overlay')[0].classList.remove("chat-overlay-open");
+        document.getElementsByClassName('chat-overlay-header-mobile')[0].classList.add('close');
+        imgElemOpen.style.opacity = 1;
+        imgElemClose.style.opacity = 0;
+        localStorage.setItem('chatOverlayOpen', false);
     }
- 
-  .chat-overlay-wrapper {
-    width: 100%;
-    height: 100%;
-  }
-}
-</style>
- <script>
-  document.getElementById('chatOverlayInputSubmit').addEventListener('click', function () {
-    var iframeElem = document.getElementById('receiver');
-    iframeElem.contentWindow.postMessage({
-      'actionType': 'ameliaSay',
-      'actionData': 'Hi there'
-    }, 'https://us.demo.amelia.com/Amelia/ui/vertiv/');
-  });
-   
-   document.getElementById('chatOverlayInputSubmit2').addEventListener('click', function () {
-    var iframeElem = document.getElementById('receiver');
-    iframeElem.contentWindow.postMessage({
-      'actionType': 'ameliaBpn',
-      'actionName': 'multi-select',
-      'actionData': {
-        'message': 'Test',
-        'submission': { 
-          'shouldEcho': false
+
+    function toggleChatOverlay() {
+        /**
+         * Toggles opening and closing of the chatOverlay
+         * @returns - no return
+         */
+        var chatOverlayHeaderImgElemOpen = document.getElementsByClassName('chat-overlay-header-img open')[0];
+        var chatOverlayHeaderImgElemClose = document.getElementsByClassName('chat-overlay-header-img close')[0];
+        var receiverElem = document.getElementById('receiver');
+        if (receiverElem.classList.contains('close')) {
+            openChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
+        } else {
+            closeChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
         }
-      }
-    }, 'https://us.demo.amelia.com/Amelia/ui/vertiv/');
-  });
-
-  function openChatOverlay (receiverElem, imgElemOpen, imgElemClose) {
-    document.getElementById('receiver').classList.add("open");
-    document.getElementById('receiver').classList.remove("close");
-    document.getElementsByClassName('chat-overlay')[0].classList.add("chat-overlay-open");
-    document.getElementsByClassName('chat-overlay')[0].classList.remove("chat-overlay-closed");
-    document.getElementsByClassName('chat-overlay-header-mobile')[0].classList.remove('close');
-    imgElemClose.style.opacity = 1;
-    imgElemOpen.style.opacity = 0;
-    localStorage.setItem('chatOverlayOpen', true);
-  }
- 
-  function closeChatOverlay (receiverElem, imgElemOpen, imgElemClose) {
-    document.getElementById('receiver').classList.add("close");
-    document.getElementById('receiver').classList.remove("open");
-    document.getElementsByClassName('chat-overlay')[0].classList.add("chat-overlay-closed");
-    document.getElementsByClassName('chat-overlay')[0].classList.remove("chat-overlay-open");
-    document.getElementsByClassName('chat-overlay-header-mobile')[0].classList.add('close');
-    imgElemOpen.style.opacity = 1;
-    imgElemClose.style.opacity = 0;
-    localStorage.setItem('chatOverlayOpen', false);
-  }
- 
-  function toggleChatOverlay () {
-    /**
-     * Toggles opening and closing of the chatOverlay
-     * @returns - no return
-     */
-    var chatOverlayHeaderImgElemOpen = document.getElementsByClassName('chat-overlay-header-img open')[0];
-    var chatOverlayHeaderImgElemClose = document.getElementsByClassName('chat-overlay-header-img close')[0];
-    var receiverElem = document.getElementById('receiver');
-    if (receiverElem.classList.contains('close')) {
-      openChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
-    } else {
-      closeChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
     }
-  }
-   
-  function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return false;
-  }
-   
-  function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-   var chatOverlayHeaderElem = document.getElementsByClassName('chat-overlay-header')[0];
-  chatOverlayHeaderElem.addEventListener('click', toggleChatOverlay);
-  var chatOverlayHeaderElemMobile = document.getElementsByClassName('chat-overlay-header-mobile')[0];
-  chatOverlayHeaderElemMobile.addEventListener('click', toggleChatOverlay);
- 
- 
-  if (typeof(Storage) !== "undefined") {
-    var chatOverlayOpen = localStorage.getItem('chatOverlayOpen');
-    var chatOverlayDefaultStateClosed = true;
-    var chatOverlayHeaderImgElemOpen = document.getElementsByClassName('chat-overlay-header-img open')[0];
-    var chatOverlayHeaderImgElemClose = document.getElementsByClassName('chat-overlay-header-img close')[0];
-    var receiverElem = document.getElementById('receiver');
 
-    
-    //     if (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true" || (chatOverlayOpen === null && chatOverlayDefaultStateClosed)) {
-    //       closeChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
-    //     } else {
-    //       openChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
-    //     }
-    
-    // Conditional below added to support Safari third party cookie issue (original conditional above without)
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return false;
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    var chatOverlayHeaderElem = document.getElementsByClassName('chat-overlay-header')[0];
+    chatOverlayHeaderElem.addEventListener('click', toggleChatOverlay);
+    var chatOverlayHeaderElemMobile = document.getElementsByClassName('chat-overlay-header-mobile')[0];
+    chatOverlayHeaderElemMobile.addEventListener('click', toggleChatOverlay);
+
+
+    if (typeof (Storage) !== "undefined") {
+        var chatOverlayOpen = localStorage.getItem('chatOverlayOpen');
+        var chatOverlayDefaultStateClosed = true;
+        var chatOverlayHeaderImgElemOpen = document.getElementsByClassName('chat-overlay-header-img open')[0];
+        var chatOverlayHeaderImgElemClose = document.getElementsByClassName('chat-overlay-header-img close')[0];
+        var receiverElem = document.getElementById('receiver');
+
+
+        //     if (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true" || (chatOverlayOpen === null && chatOverlayDefaultStateClosed)) {
+        //       closeChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
+        //     } else {
+        //       openChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
+        //     }
+
+        // Conditional below added to support Safari third party cookie issue (original conditional above without)
 //     var ameliaChatOverlayCookie = getCookie('ameliaChatOverlay');
 //     if (((isSafari || iOSSafari) && !ameliaChatOverlayCookie) || (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true" || (chatOverlayOpen === null && chatOverlayDefaultStateClosed))) {
-    
-    if (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true") {
+
+        if (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true") {
 //     if (((isSafari || iOSSafari) && !ameliaChatOverlayCookie) || (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true" || (chatOverlayOpen === null && chatOverlayDefaultStateClosed))) {
-      console.log('im closing overlay');
-      closeChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
+            console.log('im closing overlay');
+            closeChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
+        } else {
+            console.log('im opening overlay');
+            openChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
+        }
     } else {
-      console.log('im opening overlay');
-      openChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
+        // Sorry! No Web Storage support..
+        console.log('No localStorage support')
     }
-  } else {
-      // Sorry! No Web Storage support..
-    console.log('No localStorage support')
-  }
-   
-   //START of Chat Overlay drag and drop
-      var dragItem = document.querySelector(".chat-overlay");
-      var touchItem = document.querySelector(".chat-overlay-header-img.open");
-      var chatOverlayWrapper = document.querySelector('.chat-overlay-wrapper');
-      var container = document.querySelector("body");
 
-      var active = false;
-      var currentX;
-      var currentY;
-      var initialX;
-      var initialY;
-      var xOffset = 0;
-      var yOffset = 0;
+    //START of Chat Overlay drag and drop
+    var dragItem = document.querySelector(".chat-overlay");
+    var touchItem = document.querySelector(".chat-overlay-header-img.open");
+    var chatOverlayWrapper = document.querySelector('.chat-overlay-wrapper');
+    var container = document.querySelector("body");
 
-      container.addEventListener("touchstart", dragStart, false);
-      container.addEventListener("touchend", dragEnd, false);
-      container.addEventListener("touchmove", drag, false);
+    var active = false;
+    var currentX;
+    var currentY;
+    var initialX;
+    var initialY;
+    var xOffset = 0;
+    var yOffset = 0;
 
-      container.addEventListener("mousedown", dragStart, false);
-      container.addEventListener("mouseup", dragEnd, false);
-      container.addEventListener("mousemove", drag, false);
+    container.addEventListener("touchstart", dragStart, false);
+    container.addEventListener("touchend", dragEnd, false);
+    container.addEventListener("touchmove", drag, false);
 
-      function dragStart(e) {
+    container.addEventListener("mousedown", dragStart, false);
+    container.addEventListener("mouseup", dragEnd, false);
+    container.addEventListener("mousemove", drag, false);
+
+    function dragStart(e) {
         dragged = false;
         if (e.type === "touchstart") {
-          initialX = e.touches[0].clientX - xOffset;
-          initialY = e.touches[0].clientY - yOffset;
+            initialX = e.touches[0].clientX - xOffset;
+            initialY = e.touches[0].clientY - yOffset;
         } else {
-          initialX = e.clientX - xOffset;
-          initialY = e.clientY - yOffset;
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
         }
 
         if (e.target === touchItem) {
-          active = true;
+            active = true;
         }
-      }
+    }
 
-      function dragEnd(e) {
+    function dragEnd(e) {
         initialX = currentX;
         initialY = currentY;
 
@@ -344,103 +195,106 @@
         const bodyBound = document.body.getBoundingClientRect();
         const chatOverlayHeaderBound = document.getElementsByClassName('chat-overlay-header')[0].getBoundingClientRect();
         const center = {
-          x: chatOverlayHeaderBound.x + chatOverlayHeaderBound.width/2,
-          y: chatOverlayHeaderBound.y + chatOverlayHeaderBound.height/2
+            x: chatOverlayHeaderBound.x + chatOverlayHeaderBound.width / 2,
+            y: chatOverlayHeaderBound.y + chatOverlayHeaderBound.height / 2
         };
-        if(center.x < bodyBound.width/2 && center.y < bodyBound.height/2) {
-          console.log('left side/ top side');
-        } else if (center.x < bodyBound.width/2 && center.y > bodyBound.height/2) {
-          console.log('left side/ bottom side');
-        } else if (center.x > bodyBound.width/2 && center.y < bodyBound.height/2 ) {
-          console.log('right side/ top side');
+        if (center.x < bodyBound.width / 2 && center.y < bodyBound.height / 2) {
+            console.log('left side/ top side');
+        } else if (center.x < bodyBound.width / 2 && center.y > bodyBound.height / 2) {
+            console.log('left side/ bottom side');
+        } else if (center.x > bodyBound.width / 2 && center.y < bodyBound.height / 2) {
+            console.log('right side/ top side');
         } else {
-          console.log('right side/ bottom side');
+            console.log('right side/ bottom side');
         }
 
 
         console.log('center', center);
-      }
+    }
 
-      function drag(e) {
+    function drag(e) {
         if (active) {
-          e.preventDefault();
+            e.preventDefault();
 
-          dragged = true;
-          if (e.type === "touchmove") {
-            currentX = e.touches[0].clientX - initialX;
-            currentY = e.touches[0].clientY - initialY;
-          } else {
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
-          }
+            dragged = true;
+            if (e.type === "touchmove") {
+                currentX = e.touches[0].clientX - initialX;
+                currentY = e.touches[0].clientY - initialY;
+            } else {
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+            }
 
-          xOffset = currentX;
-          yOffset = currentY;
-          setTranslate(currentX, currentY, dragItem);
+            xOffset = currentX;
+            yOffset = currentY;
+            setTranslate(currentX, currentY, dragItem);
         }
-      }
+    }
 
-      function setTranslate(xPos, yPos, el) {
+    function setTranslate(xPos, yPos, el) {
         el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-      }
-   /// END of Chat Overlay drag and drop
-  
-   
-   document.querySelector('iframe#receiver').onload = function(){
-//     var iframeBody = this.contentDocument.body;
-     console.log('this iframe', this);
-     console.log('frame content', this.contentWindow);
-//     console.log('iframe loaded, body is: ', body);
-};
-   
-window.addEventListener("message", (event) => {
-  console.log('im in beginning of event', event.origin);
-  if (event.origin !== "https://us.demo.amelia.com/Amelia/ui/vertiv/")
-    return;
+    }
 
-  console.log('event', event);
-}, false);
+    /// END of Chat Overlay drag and drop
+
+
+    document.querySelector('iframe#receiver').onload = function () {
+//     var iframeBody = this.contentDocument.body;
+        console.log('this iframe', this);
+        console.log('frame content', this.contentWindow);
+//     console.log('iframe loaded, body is: ', body);
+    };
+
+    window.addEventListener("message", (event) => {
+        console.log('im in beginning of event', event.origin);
+        if (event.origin !== "https://us.demo.amelia.com/Amelia/ui/vertiv/")
+            return;
+
+        console.log('event', event);
+    }, false);
 </script>
 
 <script>
-function receiveMessage(e, data) {
-    /**
-     * Receive message from child frame and update the DOM
-     * @param {Object} data - data used to update the DOM
-     * @returns - no return
-     */
-    // Check to make sure that this message came from the correct domain.
-  
-    var url = e.data.url;
-    if (e.origin !== 'https://us.demo.amelia.com')
-      return;
- 
-    if (e.data.action === "nav_pst5") {
-        //window.location.href = "https://dsteele101.github.io/vertiv/pst5.html";
-        loadiFrame('https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/liebert-pst5-ups/');
-        console.log("nav_pst5")
+    function receiveMessage(e, data) {
+        /**
+         * Receive message from child frame and update the DOM
+         * @param {Object} data - data used to update the DOM
+         * @returns - no return
+         */
+            // Check to make sure that this message came from the correct domain.
+
+        var url = e.data.url;
+        if (e.origin !== 'https://us.demo.amelia.com')
+            return;
+
+        if (e.data.action === "nav_pst5") {
+            //window.location.href = "https://dsteele101.github.io/vertiv/pst5.html";
+            loadiFrame('https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/liebert-pst5-ups/');
+            console.log("nav_pst5")
+        }
+
+        if (e.data.action === "nav_edge") {
+            window.location.href = "https://ameliatestsite.weebly.com/edge.html";
+            console.log("nav_edge")
+        }
+
+        console.log(e.data.action)
     }
 
-    if (e.data.action === "nav_edge") {
-        window.location.href = "https://ameliatestsite.weebly.com/edge.html";
-        console.log("nav_edge")
+    function sendMessage(data) {
+        /**
+         * Use data object and postMessage to URL provided (postMessage to child frame)
+         * @param {Object} data - data to be sent to url provided of child frame
+         * @returns - no return
+         */
+
+        var receiverElem = document.getElementById('receiver').contentWindow;
+        receiverElem.postMessage(data, "https://us.demo.amelia.com/Amelia/ui/vertiv//?domainCode=derricksteele");
     }
 
-    console.log(e.data.action)
-  }
-   
-  function sendMessage(data) {
-    /**
-     * Use data object and postMessage to URL provided (postMessage to child frame)
-     * @param {Object} data - data to be sent to url provided of child frame
-     * @returns - no return
-     */
-     
-    var receiverElem = document.getElementById('receiver').contentWindow;
-    receiverElem.postMessage(data, "https://us.demo.amelia.com/Amelia/ui/vertiv//?domainCode=derricksteele");
-  }
-window.addEventListener('message', receiveMessage);
+    window.addEventListener('message', receiveMessage);
 </script>
-        <iframe src="https://www.vertiv.com/en-ca/products/" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:99;"></iframe>
-  </body>
+<iframe src="https://www.vertiv.com/en-ca/products/"
+        style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:99;"></iframe>
+</body>
 </html>
