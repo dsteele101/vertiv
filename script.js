@@ -15,9 +15,13 @@ async function grabData() {
             data.innerText = JSON.stringify(data, null, 2);
             console.log(JSON.parse(data.innerText));
             let jsonData = JSON.parse(data.innerText);
-            let url = jsonData.url
+            let ameliaUrl = jsonData.ameliaUrl
+            let clientUrl = jsonData.clientUrl
+            let chatUrl = jsonData.chatUrl
             let link = document.getElementById('receiver')
-            link.src = url
-            return jsonData;
+            link.src = ameliaUrl
+            let clientLink = document.getElementById('originalFrame')
+            clientLink.src = clientUrl
+            return clientUrl;
         })
 }
