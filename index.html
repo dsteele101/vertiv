@@ -17,7 +17,7 @@
                  alt="toggle chat overlay"/>
         </div>
         <iframe id="receiver" class="close" src=""
-                frameborder="0" width="100%" height="100%" allow="geolocation; microphone; camera">
+                style="border: none" width="100%" height="100%" allow="geolocation; microphone; camera">
             <p>Your browser does not support iframes.</p>
         </iframe>
         <div class="chat-overlay-header">
@@ -30,13 +30,17 @@
         </div>
     </div>
 </div>
+<iframe src="" id="originalFrame"
+        style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:99;"></iframe>
 <script>
+    var clientUrl = grabData()
+
     document.getElementById('chatOverlayInputSubmit').addEventListener('click', function () {
         var iframeElem = document.getElementById('receiver');
         iframeElem.contentWindow.postMessage({
             'actionType': 'ameliaSay',
             'actionData': 'Hi there'
-        }, 'https://us.demo.amelia.com/Amelia/ui/vertiv/');
+        }, clientUrl);
     });
 
     document.getElementById('chatOverlayInputSubmit2').addEventListener('click', function () {
@@ -50,7 +54,7 @@
                     'shouldEcho': false
                 }
             }
-        }, 'https://us.demo.amelia.com/Amelia/ui/vertiv/');
+        }, clientUrl);
     });
 
     function openChatOverlay(receiverElem, imgElemOpen, imgElemClose) {
@@ -125,20 +129,7 @@
         var chatOverlayHeaderImgElemOpen = document.getElementsByClassName('chat-overlay-header-img open')[0];
         var chatOverlayHeaderImgElemClose = document.getElementsByClassName('chat-overlay-header-img close')[0];
         var receiverElem = document.getElementById('receiver');
-
-
-        //     if (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true" || (chatOverlayOpen === null && chatOverlayDefaultStateClosed)) {
-        //       closeChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
-        //     } else {
-        //       openChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
-        //     }
-
-        // Conditional below added to support Safari third party cookie issue (original conditional above without)
-//     var ameliaChatOverlayCookie = getCookie('ameliaChatOverlay');
-//     if (((isSafari || iOSSafari) && !ameliaChatOverlayCookie) || (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true" || (chatOverlayOpen === null && chatOverlayDefaultStateClosed))) {
-
         if (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true") {
-//     if (((isSafari || iOSSafari) && !ameliaChatOverlayCookie) || (chatOverlayOpen && localStorage.getItem('chatOverlayOpen') !== "true" || (chatOverlayOpen === null && chatOverlayDefaultStateClosed))) {
             console.log('im closing overlay');
             closeChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
         } else {
@@ -146,11 +137,9 @@
             openChatOverlay(receiverElem, chatOverlayHeaderImgElemOpen, chatOverlayHeaderImgElemClose);
         }
     } else {
-        // Sorry! No Web Storage support..
         console.log('No localStorage support')
     }
 
-    //START of Chat Overlay drag and drop
     var dragItem = document.querySelector(".chat-overlay");
     var touchItem = document.querySelector(".chat-overlay-header-img.open");
     var chatOverlayWrapper = document.querySelector('.chat-overlay-wrapper');
@@ -235,26 +224,19 @@
         el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
 
-    /// END of Chat Overlay drag and drop
-
-
     document.querySelector('iframe#receiver').onload = function () {
-//     var iframeBody = this.contentDocument.body;
         console.log('this iframe', this);
         console.log('frame content', this.contentWindow);
-//     console.log('iframe loaded, body is: ', body);
     };
 
     window.addEventListener("message", (event) => {
         console.log('im in beginning of event', event.origin);
-        if (event.origin !== "https://us.demo.amelia.com/Amelia/ui/vertiv/")
+        if (event.origin !== clientUrl)
             return;
 
         console.log('event', event);
     }, false);
-</script>
 
-<script>
     function receiveMessage(e, data) {
         /**
          * Receive message from child frame and update the DOM
@@ -268,14 +250,8 @@
             return;
 
         if (e.data.action === "nav_pst5") {
-            //window.location.href = "https://dsteele101.github.io/vertiv/pst5.html";
             loadiFrame('https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/liebert-pst5-ups/');
             console.log("nav_pst5")
-        }
-
-        if (e.data.action === "nav_edge") {
-            window.location.href = "https://ameliatestsite.weebly.com/edge.html";
-            console.log("nav_edge")
         }
 
         console.log(e.data.action)
@@ -294,7 +270,5 @@
 
     window.addEventListener('message', receiveMessage);
 </script>
-<iframe src="https://www.vertiv.com/en-ca/products/"
-        style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:99;"></iframe>
 </body>
 </html>
