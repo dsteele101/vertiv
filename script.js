@@ -22,6 +22,6 @@ async function grabData() {
             link.src = ameliaUrl
             let clientLink = document.getElementById('originalFrame')
             clientLink.src = clientUrl
-            return clientUrl;
+            return chatUrl;
         })
 }
