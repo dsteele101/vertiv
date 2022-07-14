@@ -16,11 +16,9 @@ async function grabData() {
             let jsonData = JSON.parse(data.innerText);
             let ameliaUrl = jsonData.ameliaUrl
             let clientUrl = jsonData.clientUrl
-            var chatUrl = jsonData['chatUrl']
             let link = document.getElementById('receiver')
             link.src = ameliaUrl
             let clientLink = document.getElementById('originalFrame')
             clientLink.src = clientUrl
-            return chatUrl
         })
 }
