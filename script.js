@@ -7,21 +7,20 @@ function loadiFrame(url) {
 
 
 async function grabData() {
-    let data = await fetch("properties.json")
+    await fetch("properties.json")
         .then(response => {
             return response.json()
         })
         .then(data => {
             data.innerText = JSON.stringify(data, null, 2);
-            console.log(JSON.parse(data.innerText));
             let jsonData = JSON.parse(data.innerText);
             let ameliaUrl = jsonData.ameliaUrl
             let clientUrl = jsonData.clientUrl
-            let chatUrl = jsonData.chatUrl
+            var chatUrl = jsonData['chatUrl']
             let link = document.getElementById('receiver')
             link.src = ameliaUrl
             let clientLink = document.getElementById('originalFrame')
             clientLink.src = clientUrl
-            return chatUrl;
+            return chatUrl
         })
 }
