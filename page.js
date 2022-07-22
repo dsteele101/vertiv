@@ -6,6 +6,7 @@ let jsonData = JSON.parse(data.innerText)
 const url = jsonData.parentUrl
 const chatUrl = jsonData.chatUrl
 const ameliaUrl = jsonData.ameliaUrl
+const originUrl = jsonData.originUrl
 
 document.addEventListener("load", createFrame());
 
@@ -92,35 +93,13 @@ function toggleChatOverlay() {
 }
 
 function receiveMessage(e, data) {
-    console.log('Received message ' + e.data)
-    if (e.origin !== 'https://vertiv.demo.amelia.com')
+    console.log('Received message ' + e.data.action)
+    action = e.data.action
+    if (e.origin !== originUrl)
         return;
-
-    if (e.data.action === "nav_pst5") {
-        loadiFrame('https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/liebert-pst5-ups/');
-        console.log("nav_pst5")
-    }
-    else if (e.data.action === "nav_gxt5") {
-        loadiFrame('https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/vertiv-liebert-gxt5-ups-500-3000va-120v-ups');
-        console.log("nav_gxt5")
-    }
-    else if (e.data.action === "nav_where_to_buy") {
-        loadiFrame('https://partners.vertiv.com/English/directory?AccountCountry=USA&iAmAValue=Installer%20%2F%20Contractor&iAmLooking=Find%20a%20Vertiv%20Partner&stateValue=Georgia');
-        console.log("nav_where_to_buy")
-    }
-    else if (e.data.action === "nav_lithium") {
-        loadiFrame('https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/vertiv-liebert-psi5-lithium-ion-ups/');
-        console.log("nav_lithium")
-    }
-    else if (e.data.action === "nav_exl") {
-        loadiFrame('https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/liebert-exl-s1/');
-        console.log("nav_exl")
-    }
-    else if (e.data.action === "nav_trienergy") {
-        loadiFrame('https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/liebert-trinergy-cube-ups/');
-        console.log("nav_trienergy")
-    }
-    console.log(e.data.action)
+    let actionUrl = jsonData.actions['action'].url;
+    loadiFrame(actionUrl);
+    console.log('Sent URL to iFrame')
 }
 
 function sendMessage(data) {
