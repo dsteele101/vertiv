@@ -94,10 +94,10 @@ function toggleChatOverlay() {
 
 function receiveMessage(e, data) {
     console.log('Received message ' + e.data.action)
-    action = e.data.action
+    let action = e.data.action
     if (e.origin !== originUrl)
         return;
-    let actionUrl = jsonData.actions['action'].url;
+    let actionUrl = jsonData.actions[action].url;
     loadiFrame(actionUrl);
     console.log('Sent URL to iFrame')
 }
