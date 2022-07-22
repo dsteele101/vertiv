@@ -99,7 +99,7 @@ function receiveMessage(e, data) {
         return;
     let actionUrl = jsonData.actions[action].url;
     loadiFrame(actionUrl);
-    console.log('Sent URL to iFrame')
+    console.log('Sent URL to chat frame')
 }
 
 function sendMessage(data) {
