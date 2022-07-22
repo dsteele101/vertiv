@@ -95,8 +95,9 @@ function toggleChatOverlay() {
 function receiveMessage(e, data) {
     console.log('Received message ' + e.data.action)
     let action = e.data.action
-    if (e.origin !== originUrl)
-        return;
+    // if (e.origin !== originUrl)
+    //     console.log('Hit return in receiveMesage')
+    //     return;
     let actionUrl = jsonData.actions[action].url;
     loadiFrame(actionUrl);
     console.log('Sent URL to chat frame')
