@@ -85,7 +85,7 @@ function toggleChatOverlay() {
 }
 
 function receiveMessage(e, data) {
-    console.log('Received message ' + e)
+    console.log('Received message ' + e.data)
     if (e.origin !== 'https://vertiv.demo.amelia.com')
         return;
 
